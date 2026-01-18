@@ -1,0 +1,24 @@
+@import './base.css';
+
+#app {
+  font-weight: normal;
+  background-color: white;
+}
+
+a {
+  text-decoration: none;
+  color: var(--clever-primary-color);
+  transition: 0.4s;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+  }
+}
