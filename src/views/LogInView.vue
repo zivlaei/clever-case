@@ -17,8 +17,7 @@ const logIn = async () => {
         router.push({
             name: routeLocations.dashboardHomeView.name
         })
-
-    } catch (error) {
+    } catch {
         invalid.value = true;
     }
 }

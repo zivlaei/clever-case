@@ -13,8 +13,7 @@ export class IdentityService {
 	 * The identity of the currently authenticated user, or undefined if not authenticated.
 	 */
 	public get identity() {
-		if (this._identity == null)
-		{
+		if (this._identity == null) {
 			this._identity = new Identity();
 		}
 
@@ -26,16 +25,12 @@ export class IdentityService {
 	}
 	
 	public async autoLogin() {
-		if (this.identity.tokens != null)
-		{
-			try
-			{
-				if (this.identity.accessTokenExpirationDateTime < DateTime.local())
-				{
+		if (this.identity.tokens != null) {
+			try {
+				if (this.identity.accessTokenExpirationDateTime < DateTime.local()) {
 					await this.reauthenticate();
 				}
-				else
-				{
+				else {
 					await this.verifyAccessTokenExpireDate();
 				}
 			} catch {
@@ -45,13 +40,11 @@ export class IdentityService {
 	}
 	
 	public async unauthenticate() {
-		try
-		{
+		try {
 			this.identity.logout();
 			this._identity = undefined;
 		}
-		catch
-		{
+		catch {
 			return Promise.resolve(false);
 		}
 
@@ -61,8 +54,7 @@ export class IdentityService {
 	private async verifyAccessTokenExpireDate() {
 		clearTimeout(this._refreshTokenTimeout);
 
-		if (this.identity.tokens == null)
-		{
+		if (this.identity.tokens == null) {
 			return;
 		}
 
@@ -71,7 +63,7 @@ export class IdentityService {
 		{
 			await this.reauthenticate();
 		}
-		var tokenValidityTime = Duration.fromMillis(tokenValidityInterval.length());
+		const tokenValidityTime = Duration.fromMillis(tokenValidityInterval.length());
 		const oneMinute = Duration.fromMillis(1000 * 60);
 
 		const refresh = tokenValidityTime.minus(oneMinute);
@@ -83,18 +75,15 @@ export class IdentityService {
 	}
 	
 	public async reauthenticate() {
-		try
-		{
+		try {
 			// Implementation call to API to refresh token
 			this.identity.setTokens("result.data.accessToken", this.identity.tokens?.refresh!);
 		}
-		catch
-		{
+		catch {
 			this.unauthenticate();
 			return false;
 		}
-		finally
-		{
+		finally {
 			this.authenticated();
 		}
 
@@ -107,8 +96,7 @@ export class IdentityService {
 		if (username !== "hej@clever.dk" || password !== "123456") {
 			throw new Error("Invalid credentials");
 		}
-
-
+		
 		this.identity.setTokens("access_token", "refresh_token");
 		this.verifyAccessTokenExpireDate();
 	}

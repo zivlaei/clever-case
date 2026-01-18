@@ -44,7 +44,7 @@ export class Identity {
 		return true;
 	}
 	
-	public setInitialInformations(data: any) {
+	public setInitialInformations() {
 		// Set user data
 	}
 
